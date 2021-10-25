@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import sqlite3
 
 app = Flask(__name__)
@@ -16,6 +16,7 @@ def loguear():
 	password = request.form['password']
 
 	if username == usernamedb and password == passworddb:
+		session['username'] = username
 		return redirect("/")
 
 	return redirect("/login")
@@ -31,8 +32,9 @@ def logout():
 @app.before_request
 def middleware():
 	path = request.path
+	publicPath = ["/login"]
 
-	if path != "/login":
+	if not 'username' in session and (path in not publicPath):
 		return redirect("/login")
 
 @app.errorhandler(404)
