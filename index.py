@@ -24,6 +24,10 @@ def loguear():
 def login():
 	return render_template("login.html")
 
+@app.route("/logout")
+def logout():
+	return redirect("/login")
+
 @app.before_request
 def middleware():
 	path = request.path
