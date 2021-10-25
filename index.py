@@ -27,6 +27,7 @@ def login():
 
 @app.route("/logout")
 def logout():
+	session.pop("username", None)
 	return redirect("/login")
 
 @app.before_request
