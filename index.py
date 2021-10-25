@@ -34,7 +34,7 @@ def middleware():
 	path = request.path
 	publicPath = ["/login"]
 
-	if not 'username' in session and (path in not publicPath):
+	if not 'username' in session and (path not in publicPath):
 		return redirect("/login")
 
 @app.errorhandler(404)
