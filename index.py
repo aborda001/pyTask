@@ -52,7 +52,7 @@ def newusername():
 @app.before_request
 def middleware():
 	path = request.path
-	publicPath = ["/login"]
+	publicPath = ["/login","/static/css/styles.css", "/static/js/main.js"]
 
 	if not 'username' in session and (path not in publicPath):
 		return redirect("/login")
