@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 import sqlite3
+from functions import *
 
 app = Flask(__name__)
 baseDeDatos = "database.sqlite"
@@ -29,6 +30,24 @@ def login():
 def logout():
 	session.pop("username", None)
 	return redirect("/login")
+
+@app.route("/newusername", methods = ['POST'])
+def newusername():
+	username = request.form['username']
+	password = request.form['password']
+	password = hashedPassword(password)
+
+	conexion = sqlite3.connect(baseDeDatos)
+	cursor = conexion.cursor()
+
+	cursor.execute("INSERT INTO User VALUES (null,'%s','%s')" % (username, password))
+	conexion.commit()
+
+	cursor.close()
+	conexion.close()
+
+	return jsonify({"Data":"New user added"})
+
 
 @app.before_request
 def middleware():
