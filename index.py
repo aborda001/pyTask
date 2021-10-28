@@ -52,10 +52,12 @@ def newusername():
 @app.before_request
 def middleware():
 	path = request.path
-	publicPath = ["/login","/static/css/styles.css", "/static/js/main.js"]
-
-	if not 'username' in session and (path not in publicPath):
-		return redirect("/login")
+	publicPath = ["/login"]
+	endpoint = request.endpoint
+	
+	if endpoint != 'static':
+		if not 'username' in session and (path not in publicPath):
+			return redirect("/login")
 
 @app.errorhandler(404)
 def notFound(e):
