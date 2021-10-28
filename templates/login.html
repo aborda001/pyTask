@@ -1,5 +1,50 @@
 {% extends "layout.html" %}
 {% block username%}{% endblock %}
 {% block body %}
-	<h1>Login.html</h1>
+	<div class="row px-5 py-5">
+		<div class="col-md-4 py-5">
+			<div class="card card-body">
+				<div class="mb-5">
+					<label for="username" class="form-label fs-3">Username</label>
+					<input type="text" class="form-control fs-4" id="username" autocomplete="off" placeholder="Username" autofocus>
+				</div>
+				<div class="mb-4">
+					<label for="password" class="form-label fs-3">Password</label>
+					<input type="password" class="form-control fs-4" id="password" autocomplete="off" placeholder="Password">
+				</div>
+				<button class="btn btn-primary fs-4 fw-bold mb-4" id="btnLogin">Login</button>
+				<p class=" px-3 fs-5"> No tienes una cuenta? <a href="" id="btnRegister">Registrate aqui.</a></p>
+			</div>
+		</div>
+	</div>
+	<!-- Modal registro-->
+	<div class="modal fade" id="modalRegistro" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Crear cuenta</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="usernameModal" class="form-label fs-4">Username</label>
+						<input type="text" class="form-control fs-4" id="usernameModal" autocomplete="off" placeholder="Username" autofocus>
+					</div>
+					<div class="mb-3">
+						<label for="passwordModal" class="form-label fs-4">Password</label>
+						<input type="password" class="form-control fs-4" id="passwordModal" autocomplete="off" placeholder="Password">
+					</div>
+					<div class="mb-3">
+						<label for="passwordModal" class="form-label fs-4">Confirmar password</label>
+						<input type="password" class="form-control fs-4" id="confirmarPasswordModal" autocomplete="off" placeholder="Password">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-primary" id="btnCrearCuenta">Crear cuenta</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../static/js/login.js"></script>
 {% endblock %}
