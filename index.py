@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, jsonify
+from flask import Flask, render_template, request, redirect, session, jsonify, flash
 import sqlite3
 from functions import *
 
@@ -9,18 +9,23 @@ app.secret_key = "secret_key"
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	return "render_template('index.html')"
 
 @app.route("/loguear", methods = ['POST'])
 def loguear():
 	username = request.form['username']
 	password = request.form['password']
 
+	sql = f"SELECT userName, password FROM User WHERE userName = '{username}'"
+
+	usernamedb, passworddb = querySqlite(sql, baseDeDatos)
+	
 	if username == usernamedb and password == passworddb:
 		session['username'] = username
 		return redirect("/")
-
-	return redirect("/login")
+		
+	flash("Correo o contraseña incorrectos")
+	return redirect('/login')
 
 @app.route("/login")
 def login():
@@ -52,9 +57,9 @@ def newusername():
 @app.before_request
 def middleware():
 	path = request.path
-	publicPath = ["/login"]
+	publicPath = ["/login", "/loguear"]
 	endpoint = request.endpoint
-	
+
 	if endpoint != 'static':
 		if not 'username' in session and (path not in publicPath):
 			return redirect("/login")
