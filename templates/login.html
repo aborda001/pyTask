@@ -14,13 +14,13 @@
 			<form action="/loguear" method="POST">
 				<div class="mb-5">
 					<label for="username" class="form-label fs-3">Username</label>
-					<input type="text" class="form-control fs-4" id="username" autocomplete="off" placeholder="Username" autofocus name="username">
+					<input type="text" class="form-control fs-4" id="username" autocomplete="off" placeholder="Username" autofocus name="username" required>
 				</div>
 				<div class="mb-4">
 					<label for="password" class="form-label fs-3">Password</label>
-					<input type="password" class="form-control fs-4" id="password" autocomplete="off" placeholder="Password" name="password">
+					<input type="password" class="form-control fs-4" id="password" autocomplete="off" placeholder="Password" name="password" required>
 				</div>
-				<button href="/" class="btn btn-primary fs-4 fw-bold mb-4 form-control" id="btnLogin">Login</button>
+				<button class="btn btn-primary fs-4 fw-bold mb-4 form-control" id="btnLogin">Login</button>
 			</form>
 			<p class=" px-3 fs-5"> No tienes una cuenta? <a href="" id="btnRegister">Registrate aqui.</a></p>
 		</div>
@@ -37,7 +37,7 @@
 			<div class="modal-body">
 				<div class="mb-3">
 					<label for="usernameModal" class="form-label fs-4">Username</label>
-					<input type="text" class="form-control fs-4" id="usernameModal" autocomplete="off" placeholder="Username" autofocus>
+					<input type="text" class="form-control fs-4" id="usernameModal" autocomplete="off" placeholder="Username">
 				</div>
 				<div class="mb-3">
 					<label for="passwordModal" class="form-label fs-4">Password</label>
@@ -47,11 +47,12 @@
 					<label for="passwordModal" class="form-label fs-4">Confirmar password</label>
 					<input type="password" class="form-control fs-4" id="confirmarPasswordModal" autocomplete="off" placeholder="Password">
 				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-primary" id="btnCrearCuenta">Crear cuenta</button>
+				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-primary" id="btnCrearCuenta">Crear cuenta</button>
-			</div>
+			
 		</div>
 	</div>
 </div>
