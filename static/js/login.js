@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				data = data.Data
 				$.notify(`${data}`, "success");
 			},
-			error: (error) =>{
+			error: (error) => {
 				error = error.responseJSON.Data;
 				$.notify(`${error}`, "danger");
 			}
@@ -28,9 +28,19 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	btnCrearCuenta.onclick = () => {
-		username = $('#usernameModal').val()
-		password = $('#passwordModal').val()
-		ajaxUsername(username,password)
+		username = $('#usernameModal').val();
+		password = $('#passwordModal').val();
+		confirmarPassword = $('#confirmarPasswordModal').val();
+
+		if (username == false || password == false || confirmarPassword == false) {
+			$.notify("Todos los campos son obligatorios", "danger");
+		} else {
+			if (password == confirmarPassword) {
+				ajaxUsername(username, password);
+			} else {
+				$.notify("Las contraseñas no coinciden", "danger");
+			}
+		}
 	}
 
 });
