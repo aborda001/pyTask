@@ -3,7 +3,7 @@ import sqlite3
 from functions import *
 
 app = Flask(__name__)
-baseDeDatos = "database.sqlite"
+database = "database.sqlite"
 
 app.secret_key = "secret_key"
 
@@ -18,9 +18,15 @@ def loguear():
 
 	sql = f"SELECT userName, password FROM User WHERE userName = '{username}'"
 
-	usernamedb, passworddb = querySqlite(sql, baseDeDatos)
+	data = querySqlite(sql, database)
+	if data:
+		data = data[0]
+		usernamedb = data[0]
+		passworddb = data[1]
+	else:
+		usernamedb, passworddb = False, False
 	
-	if username == usernamedb and password == passworddb:
+	if username == usernamedb and comprobePassword(password,passworddb):
 		session['username'] = username
 		return redirect("/")
 		
@@ -42,22 +48,22 @@ def newusername():
 	password = request.form['password']
 	password = hashedPassword(password)
 
-	conexion = sqlite3.connect(baseDeDatos)
-	cursor = conexion.cursor()
+	sql = f"SELECT userName FROM User WHERE userName = '{username}'"
+	exist = querySqlite(sql, database)
 
-	cursor.execute("INSERT INTO User VALUES (null,'%s','%s')" % (username, password))
-	conexion.commit()
+	if exist:
+		return jsonify({"Data":"El usuario ya existe"}),423
 
-	cursor.close()
-	conexion.close()
+	sql = f"""INSERT INTO User VALUES (null,'{username}',"{password}")"""
+	exist = querySqlite(sql, database)
+	return jsonify({"Data":"Usuario agregado correctamente"}),200
 
-	return jsonify({"Data":"New user added"})
-
+	
 
 @app.before_request
 def middleware():
 	path = request.path
-	publicPath = ["/login", "/loguear"]
+	publicPath = ["/login", "/loguear", "/newusername"]
 	endpoint = request.endpoint
 
 	if endpoint != 'static':
