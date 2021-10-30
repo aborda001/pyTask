@@ -19,12 +19,12 @@ def querySqlite(sql, database):
 	cursor = conexion.cursor()
 
 	cursor.execute(sql)
-	data = cursor.fetchone()
+
+	if (sql.split()[0].lower() == 'select' ):
+		data = cursor.fetchall()
+	conexion.commit()
 
 	cursor.close()
 	conexion.close()
 
-	if data:
-		return data
-
-	return "NONE", "NONE"
+	return data
