@@ -11,9 +11,13 @@ def hashedPassword(password):
 	
 	password = bcrypt.hashpw(password, salt)
 
-	return password
+	return password.decode()
 
 def querySqlite(sql, database):
+	"""Recibe la consulta y la base de datos al cual hacer la consulta,
+		si es un 'SELECT' devuelve los datos obtenidos, sino realiza los cambios
+		en caso que sea un 'INSERT' o 'UPDATE'
+	"""
 	data = []
 	conexion = sqlite3.connect(database)
 	cursor = conexion.cursor()
@@ -28,3 +32,14 @@ def querySqlite(sql, database):
 	conexion.close()
 
 	return data
+
+def comprobePassword(password, passworddb):
+	"""Contrasenas a comparar de tipo 'str', las convierte a bytes
+	y luego deuvuelve la comparacion de ambos
+	"""
+	password = password.encode()
+	passworddb = passworddb.encode()
+	
+	return bcrypt.checkpw(password, passworddb)
+
+	
