@@ -9,25 +9,27 @@ app.secret_key = "secret_key"
 
 @app.route("/")
 def index():
-	return "render_template('index.html')"
+	return render_template('index.html')
 
 @app.route("/loguear", methods = ['POST'])
 def loguear():
 	username = request.form['username']
 	password = request.form['password']
 
-	sql = f"SELECT userName, password FROM User WHERE userName = '{username}'"
+	sql = f"SELECT * FROM User WHERE userName = '{username}'"
 
 	data = querySqlite(sql, database)
 	if data:
 		data = data[0]
-		usernamedb = data[0]
-		passworddb = data[1]
+		idUser = data[0]
+		usernamedb = data[1]
+		passworddb = data[2]
 	else:
 		usernamedb, passworddb = False, False
 	
 	if username == usernamedb and comprobePassword(password,passworddb):
-		session['username'] = username
+		session['idUser'] = idUser
+		session['username'] = usernamedb
 		return redirect("/")
 		
 	flash("Correo o contraseña incorrectos")
@@ -40,6 +42,7 @@ def login():
 @app.route("/logout")
 def logout():
 	session.pop("username", None)
+	session.pop("idUser", None)
 	return redirect("/login")
 
 @app.route("/newusername", methods = ['POST'])
@@ -58,7 +61,18 @@ def newusername():
 	exist = querySqlite(sql, database)
 	return jsonify({"Data":"Usuario agregado correctamente"}),200
 
+@app.route("/newtask", methods = ['POST'])
+def newtask():
+	description = request.form['description']
+	status = request.form['status']
+	idUser = session['idUser']
+
+	sql = f"INSERT INTO Task VALUES (null, {idUser}, '{description}', '{status}')"
 	
+	data = querySqlite(sql, database)
+
+	flash("Tarea agregada correctamente")
+	return redirect("/")
 
 @app.before_request
 def middleware():
