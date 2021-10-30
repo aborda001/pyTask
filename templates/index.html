@@ -3,6 +3,16 @@
 	{{session['username']}}
 {% endblock%}
 {% block body%}
+	<div class="row py-2 px-5">
+		<div class="col-md-4">
+		</div>
+		<div class="col-md-1"></div>
+		<div class="col-md-6">
+			<div class="input-group my-3">
+				<input type="text" placeholder="Ingrese tarea a buscar" class="form-control fs-4" id="taskSearcher">
+			</div>
+		</div>
+	</div>
 	<div class="row px-5">
 		<div class="col-md-4">
 			{% with mensajes_flash = get_flashed_messages()[0] %}
