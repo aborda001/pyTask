@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block username %}
+	{{session['username']}}
+{% endblock%}
+{% block body%}
+	<div class="row px-5">
+		<div class="col-md-4">
+			<div class="card card-body">
+				<form action="/newtask" method="POST">
+					<div class="mb-5">
+						<label for="descripcion" class="form-label fs-3">Descripcion</label>
+						<input type="text" class="form-control fs-4" id="descripcion" autocomplete="off" placeholder="Descripcion" autofocus name="descripcion" required>
+					</div>
+					<div class="mb-4">
+						<select class="form-select fs-4" aria-label="Default select example" id="Selector">
+							<option selected>Por hacer</option>
+							<option value="Haciendo">Haciendo</option>
+							<option value="Hecho">Hecho</option>
+						</select>
+					</div>
+					<button class="btn btn-primary fs-4 fw-bold mb-4 form-control" id="btnGuardarTarea">Guardar tarea</button>
+				</form>
+			</div>
+		</div>
+		<div class="col-md-1"></div>
+		<div class="col-md-6">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Por hacer</th>
+						<th scope="col">Haciendo</th>
+						<th scope="col">Hecho</th>
+					</tr>
+				</thead>
+				<tbody id="tablaTareas">
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock%}
