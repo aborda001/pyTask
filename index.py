@@ -77,7 +77,7 @@ def newtask():
 @app.route("/tasksearch", methods = ['POST'])
 def tasksearch():
 	search = request.form['search']
-	
+
 	if search == '':
 		sql = f"SELECT * FROM Task WHERE idUser = {session['idUser']}"
 	else:
@@ -114,7 +114,7 @@ def middleware():
 
 @app.errorhandler(404)
 def notFound(e):
-	return render_template("notFound.html")
+	return render_template("notfound.html")
 
 if __name__ == '__main__':
 	app.run(host= "127.0.0.1",
