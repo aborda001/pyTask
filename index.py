@@ -76,7 +76,12 @@ def newtask():
 
 @app.route("/tasksearch", methods = ['POST'])
 def tasksearch():
-	sql = f"SELECT * FROM Task WHERE idUser = {session['idUser']}"
+	search = request.form['search']
+	
+	if search == '':
+		sql = f"SELECT * FROM Task WHERE idUser = {session['idUser']}"
+	else:
+		sql = f"SELECT * FROM Task WHERE idUser = {session['idUser']} and description LIKE '%{search}%'"
 	tasks = querySqlite(sql, database)
 
 	hacer = []
