@@ -1,15 +1,28 @@
-{% for dat in data %}
+{% set hacer = filterTasks[0]%}
+{% set haciendo = filterTasks[1]%}
+{% set hecho = filterTasks[1] %}
+
+{% set lenHacer = lenTasks[0] %}
+{% set lenHaciendo = lenTasks[1] %}
+{% set lenHecho = lenTasks[2] %}
+{% set maxLen = lenTasks[3] %}
+
+{% for i in range(maxLen) %}
 	<tr>
-		<td>{{dat[0]}}</td>
-		<td>{{dat[1]}}</td>
 		<td>
-			
-			<a href="/actualizarProducto" class="btn btn-success mx-1">
-				<i class="fas fa-pen"></i>
-			</a>
-			<a href="/eliminarProducto" class="btn btn-danger mx-1 btnEliminar">
-				<i class="fas fa-trash"></i>
-			</a>
+			{% if i < lenHacer%}
+				{{hacer[i][2]}}
+			{% endif%}
+		</td>
+		<td>
+			{% if i < lenHaciendo%}
+				{{haciendo[i][2]}}
+			{% endif%}
+		</td>
+		<td>
+			{% if i < lenHecho%}
+				{{hecho[i][2]}}
+			{% endif%}
 		</td>
 	</tr>
 {% endfor %}
