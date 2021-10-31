@@ -74,6 +74,29 @@ def newtask():
 	flash("Tarea agregada correctamente")
 	return redirect("/")
 
+@app.route("/tasksearch", methods = ['POST'])
+def tasksearch():
+	sql = f"SELECT * FROM Task WHERE idUser = {session['idUser']}"
+	tasks = querySqlite(sql, database)
+
+	hacer = []
+	haciendo = []
+	hecho = []
+
+	for task in tasks:
+		if task[3] =="hacer":
+			hacer.append(task)
+		elif task[3] == "haciendo":
+			haciendo.append(task)
+		else:
+			hecho.append(task)
+
+	filterTasks = [hacer,haciendo,hecho]
+	lenTasks = [len(hacer), len(haciendo), len(hecho)]
+	lenTasks.append(max(lenTasks))
+
+	return jsonify({'htmlresponse': render_template('tasklist.html', filterTasks = filterTasks, lenTasks = lenTasks)})
+
 @app.before_request
 def middleware():
 	path = request.path
